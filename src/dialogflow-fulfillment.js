@@ -498,9 +498,11 @@ class WebhookClient {
     } else if (SUPPORTED_RICH_MESSAGE_PLATFORMS.indexOf(this.requestSource) > -1
       || SUPPORTED_PLATFORMS.indexOf(this.requestSource) < 0) {
       this.client.addMessagesResponse_(requestSource);
+      this.client.addTextResponse_();
     }
     if (payload && !payload.sendAsMessage) {
       this.client.addPayloadResponse_(payload, requestSource);
+      this.client.addTextResponse_();
     }
     this.client.sendResponses_(requestSource);
   }
