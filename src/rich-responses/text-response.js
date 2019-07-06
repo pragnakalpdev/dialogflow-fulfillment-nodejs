@@ -135,7 +135,7 @@ class Text extends RichResponse {
       response.displayText = this.text;
     } else {
       // { 'type': 0, 'platform': 'facebook', 'speech': 'text response'};
-      response = {type: v1MessageObjectText};
+      response = { type: v1MessageObjectText };
       // response is the same for generic responses without the platform attribute
       // if the platform is not undefined or the platform is not unspecified
       if (SUPPORTED_RICH_MESSAGE_PLATFORMS.indexOf(platform) > -1) {
@@ -170,7 +170,7 @@ class Text extends RichResponse {
     if (platform === PLATFORMS.ACTIONS_ON_GOOGLE) {
       response = {
         platform: 'ACTIONS_ON_GOOGLE',
-        simpleResponses: {simpleResponses: [{}]},
+        simpleResponses: { simpleResponses: [{}] },
       };
       if (this.ssml) {
         response.simpleResponses.simpleResponses[0].ssml = this.ssml;
@@ -178,9 +178,18 @@ class Text extends RichResponse {
         response.simpleResponses.simpleResponses[0].textToSpeech = this.text;
       }
       response.simpleResponses.simpleResponses[0].displayText = this.text;
+    }
+    else if (platform === PLATFORMS.TELEPHONY) {
+      response = {
+        platform: 'TELEPHONY',
+        telephonySynthesizeSpeech: {},
+      };
+      if (this.text) {
+        response.telephonySynthesizeSpeech.text = this.text;
+      }
     } else {
       // {"text": {"text": ["text response"]},"platform": "FACEBOOK"}
-      response = {text: {text: []}};
+      response = { text: { text: [] } };
       response.text.text = [this.text];
       // response is the same for generic responses without the platform attribute
       if (SUPPORTED_RICH_MESSAGE_PLATFORMS.indexOf(platform) > -1) {
