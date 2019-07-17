@@ -149,10 +149,17 @@ class Payload extends RichResponse {
       return null;
     }
 
-    return {
-      payload: this.getPayload_(this.platform),
-      platform: this.platform,
-    };
+    if (this.platform === PLATFORMS.TELEPHONY) {
+      return {
+        platform: this.platform, ...this.payload
+      }  
+    }
+    else {
+      return {
+        payload: this.getPayload_(this.platform),
+        platform: this.platform,
+      };
+    }
   }
 }
 
